@@ -1,62 +1,62 @@
-# Документ проекта: Rusongs.org
+# Project Document: Rusongs.org
 
-## 🎵 Обзор проекта
+## Project Overview
 
-**Rusongs.org** - это современная энциклопедия русских песен и богатая коллекция их исполнений. Место, где можно найти любую любимую песню в десятках вариантов — от архивных записей до современных каверов.
+**Rusongs.org** is a modern encyclopedia of Russian songs and a curated catalog of their performances. It is the place to discover any favorite song across dozens of versions, from archival recordings to contemporary covers.
 
-### Девиз проекта
+### Project Motto
 
-_"Вся богатая история русской песни в одном месте"_
+_"The entire rich history of the Russian song in one place."_
 
-## 🌍 Проблема и решение
+## Problem and Solution
 
-### Проблемы, которые мы решаем:
+### Problems We Address
 
-1. **Разрозненность исполнений** - чтобы найти разные версии песни, нужно искать по всему интернету
-2. **Нет структуры и сравнений** - нельзя легко сравнить исполнения, оценить их, обсудить
-3. **Плохие тексты и аккорды** - много ошибок в текстах и неправильных аккордах в интернете
-4. **Исчезающие записи** - редкие исполнения теряются в архивах
+1. **Scattered performances** – listeners have to search the entire internet to find different versions of a song.
+2. **No structure or side-by-side comparison** – it is difficult to compare, evaluate, and discuss performances.
+3. **Unreliable lyrics and chords** – most lyrics/chords online contain errors.
+4. **Disappearing recordings** – rare performances are getting lost in archives.
 
-### Наше решение:
+### Our Solution
 
-- **Единая база исполнений** каждой песни с возможностью сравнения
-- **Проверенные тексты и аккорды** от сообщества
-- **Умная система рейтингов** - сообщество выбирает лучшие исполнения
-- **Сохраняем культурное наследие** - редкие записи и живые исполнения
+- **Unified performance catalog** for every song with structured comparison.
+- **Verified lyrics and chords** curated by the community.
+- **Smart rating system** where the community highlights the best performances.
+- **Preservation of cultural heritage** through digitizing rare recordings and live performances.
 
-## 👥 Целевая аудитория
+## Target Audience
 
-### Основные сегменты:
+### Primary Segments
 
-#### 1. Меломаны и ценители (35%)
+#### 1. Music lovers and connoisseurs (35%)
 
-- **Описание**: Любители глубоко погружаться в музыку, сравнивать версии
-- **Потребности**: Находить редкие записи, изучать историю исполнений
-- **Пример**: "Хочу послушать 10 разных исполнений 'Вечер на рейде'"
+- **Description**: Listeners who love deep dives into music history and comparing interpretations.
+- **Needs**: Discover rare recordings and study how performances evolved.
+- **Use case**: “I want to hear ten different versions of ‘Evening on the Roadstead’.”
 
-#### 2. Музыканты и исполнители (25%)
+#### 2. Musicians and performers (25%)
 
-- **Описание**: Гитаристы, баянисты, певцы - любители и профессионалы
-- **Потребности**: Правильные аккорды, вдохновение от других исполнений
-- **Пример**: "Нужны аккорды для 'Калинки' и посмотреть, как её играют другие"
+- **Description**: Guitarists, vocalists, instrumentalists – both amateurs and professionals.
+- **Needs**: Accurate chords and inspiration from other artists.
+- **Use case**: “I need the chords for ‘Kalinka’ and want to watch how other bands perform it.”
 
-#### 3. Ностальгирующая аудитория (20%)
+#### 3. Nostalgic listeners (20%)
 
-- **Описание**: Люди 45+, которые хотят вспомнить песни своей молодости
-- **Потребности**: Найти конкретные исполнения из прошлого
-- **Пример**: "Ищу ту самую версию 'Смуглянки' из нашего детства"
+- **Description**: 45+ audience who want to revisit songs from their youth.
+- **Needs**: Find specific versions they remember from radio, TV, or family archives.
+- **Use case**: “I’m looking for that exact 1970s version of ‘Smuglyanka’ we listened to as kids.”
 
-#### 4. Культурные энтузиасты (20%)
+#### 4. Cultural enthusiasts (20%)
 
-- **Описание**: Молодежь и иностранцы, интересующиеся русской культурой
-- **Потребности**: Изучать песни в культурном контексте
-- **Пример**: "Хочу понять, почему 'Катюша' стала народным хитом"
+- **Description**: Younger listeners and international audiences interested in Russian culture.
+- **Needs**: Understand songs within their historical and cultural context.
+- **Use case**: “I want to understand why ‘Katyusha’ became an iconic folk song.”
 
-## 🎯 Ключевые функции
+## Key Features
 
-### Core Features:
+### Core Features
 
-#### 1. 🎵 Богатая база исполнений
+#### 1. Comprehensive performance catalog
 
 ```typescript
 interface Performance {
@@ -67,22 +67,22 @@ interface Performance {
   year: number;
   source: "youtube" | "vk" | "rutube" | "soundcloud" | "user_upload";
   quality: {
-    audio: number; // Качество звука 1-5
-    video: number; // Качество видео 1-5
-    authenticity: number; // Аутентичность исполнения
+    audio: number; // Audio quality 1-5
+    video: number; // Video quality 1-5
+    authenticity: number; // Historical authenticity
   };
-  context?: string; // История исполнения: "Запись 1968 года, хор им. Пятницкого"
+  context?: string; // Recording context: "1968 recording, Pyatnitsky Choir"
 }
 ```
 
-#### 2. 📊 Система сравнения и рейтингов
+#### 2. Comparison and rating system
 
-- **Народный рейтинг** - голосование за лучшие исполнения
-- **Категории оценок**: качество звука, аранжировка, эмоциональность
-- **Топы**: "Лучшее студийное исполнение", "Лучший живой концерт"
-- **Экспертные подборки** - кураторские выборы
+- **Community rating** for highlighting standout performances.
+- **Scoring dimensions**: sound quality, arrangement, emotional impact.
+- **Leaderboards** such as “Best studio performance” or “Best live recording.”
+- **Expert-curated collections** to surface hidden gems.
 
-#### 3. 🎸 Инструменты для музыкантов
+#### 3. Musician tools
 
 ```tsx
 // components/SongTools.tsx
@@ -98,87 +98,86 @@ export function SongTools({ song }) {
 }
 ```
 
-#### 4. 📚 Умные подборки и коллекции
+#### 4. Smart discovery and collections
 
-- **Автоматические**: "Все исполнения 1950-х годов"
-- **Тематические**: "Весенние народные песни", "Военные романсы"
-- **Пользовательские**: "Мои любимые версии русских песен"
-- **Экспертные**: "Шедевры русского романса от музыковеда"
+- **Automated**: “All performances from the 1950s.”
+- **Thematic**: “Spring folk songs,” “Wartime romances.”
+- **User-generated**: “My favorite versions of Russian songs.”
+- **Expert**: “Russian romance masterpieces curated by a musicologist.”
 
-#### 5. 💬 Сообщество и обсуждения
+#### 5. Community and collaboration
 
-- **Комментарии к исполнениям** - делиться мнениями
-- **Обсуждения песен** - история, культурный контекст
-- **Добавление исполнений** - пользователи пополняют базу
-- **Исправления текстов** - краудсорсинг точности
+- **Comments and discussions** for every performance.
+- **Song history threads** to capture cultural background.
+- **User submissions** to expand the catalog.
+- **Crowdsourced corrections** for lyrics and chords.
 
-## 🎨 Дизайн-концепция
+## Design Concept
 
-### Стиль: "Современная музыкальная библиотека"
+### Style: “Modern Musical Library”
 
 ```css
-/* Цветовая палитра */
---primary: #2c5530; /* Глубокий зеленый - природа, народность */
---secondary: #8b4513; /* Коричневый - земля, традиции */
---accent: #b8860b; /* Золотой - качество, ценность */
+/* Color palette */
+--primary: #2c5530;   /* Deep green – nature, folk traditions */
+--secondary: #8b4513; /* Earthy brown – heritage */
+--accent: #b8860b;    /* Gold – value and quality */
 
---background: #fdf6e3; /* Кремовый фон - теплый и читаемый */
---surface: #ffffff; /* Белые карточки */
---text-primary: #2d3748; /* Темный текст */
+--background: #fdf6e3;     /* Warm, readable background */
+--surface: #ffffff;        /* Card surfaces */
+--text-primary: #2d3748;   /* Dark text for readability */
 ```
 
-### Ключевые страницы:
+### Key Screens
 
-#### 1. Главная - открытие музыки
+#### 1. Homepage – music discovery
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│ 🎵 Rusongs • [Поиск] Каталог Коллекции Сообщество      │
+│ Rusongs • [Search] Catalog Collections Community       │
 ├────────────────────────────────────────────────────────┤
 │                                                        │
-│  "Откройте богатый мир русской песни"                  │
+│  "Discover the rich world of Russian songs"            │
 │                                                        │
 │  ┌─────────────────┐ ┌─────────────────┐               │
-│  │   Исполнение    │ │   Исполнение    │  Лучшие       │
-│  │    дня          │ │    недели       │  версии       │
+│  │ Performance     │ │ Performance     │  Featured     │
+│  │   of the day    │ │   of the week   │  highlights   │
 │  └─────────────────┘ └─────────────────┘               │
 │                                                        │
-│  Новые добавления | Редкие записи | Живые выступления  │
+│  New additions | Rare recordings | Live performances   │
 │  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐               │
-│  │     │ │     │ │     │ │     │ │     │               │
 │  │     │ │     │ │     │ │     │ │     │               │
 │  └─────┘ └─────┘ └─────┘ └─────┘ └─────┘               │
 │                                                        │
-│  Темы месяца: Народные песни | Советская классика      │
+│  Monthly themes: Folk songs | Soviet classics          │
 └────────────────────────────────────────────────────────┘
 ```
 
-#### 2. Страница песни - сердце проекта
+#### 2. Song page – the heart of the product
 
 ```tsx
 // app/songs/[id]/page.tsx
 <SongPage>
   <SongHeader>
-    <Title>Калинка</Title>
-    <Metadata>Народная песня, 1860 • 247 исполнений</Metadata>
-    <Actions>[♡ В избранное] [➕ В сборник]</Actions>
+    <Title>Kalinka</Title>
+    <Metadata>Traditional song, 1860 • 247 performances</Metadata>
+    <Actions>[♡ Add to favorites] [➕ Add to collection]</Actions>
   </SongHeader>
 
   <TabNavigation>
-    <Tab name="Исполнения">
+    <Tab name="Performances">
       <PerformanceBrowser
         performances={performances}
-        sortOptions={["по рейтингу", "по году", "по популярности"]}
-        filterOptions={["студийные", "живые", "народные", "современные"]}
+        sortOptions={["rating", "year", "popularity"]}
+        filterOptions={["studio", "live", "folk", "modern"]}
       />
     </Tab>
 
-    <Tab name="Текст и аккорды">
+    <Tab name="Lyrics and chords">
       <LyricsWithChords lyrics={lyrics} chords={chords} />
       <SongTools song={song} />
     </Tab>
 
-    <Tab name="История и обсуждение">
+    <Tab name="History and discussion">
       <SongHistory context={historicalContext} />
       <CommentsSection songId={song.id} />
     </Tab>
@@ -186,7 +185,7 @@ export function SongTools({ song }) {
 </SongPage>
 ```
 
-#### 3. Браузер исполнений
+#### 3. Performance browser
 
 ```tsx
 // components/PerformanceBrowser.tsx
@@ -194,10 +193,10 @@ export function PerformanceBrowser({ performances }) {
   return (
     <div className="performance-browser">
       <div className="filters">
-        <DecadeFilter /> {/* 1950-е, 1960-е, etc */}
-        <TypeFilter /> {/* Студийные, живые, каверы */}
-        <QualityFilter /> {/* Качество звука */}
-        <ArtistFilter /> {/* Исполнители */}
+        <DecadeFilter /> {/* 1950s, 1960s, etc. */}
+        <TypeFilter /> {/* Studio, live, covers */}
+        <QualityFilter /> {/* Sound quality */}
+        <ArtistFilter /> {/* Performers */}
       </div>
 
       <div className="performances-grid">
@@ -215,9 +214,9 @@ export function PerformanceBrowser({ performances }) {
 }
 ```
 
-## 🎵 Специальные функции
+## Special Capabilities
 
-### 1. Сравнение исполнений
+### 1. Performance comparison
 
 ```tsx
 // components/PerformanceComparator.tsx
@@ -227,12 +226,12 @@ export function PerformanceComparator({ performances }) {
       <table>
         <thead>
           <tr>
-            <th>Исполнение</th>
-            <th>Год</th>
-            <th>Рейтинг</th>
-            <th>Темп</th>
-            <th>Аранжировка</th>
-            <th>Особенности</th>
+            <th>Performance</th>
+            <th>Year</th>
+            <th>Rating</th>
+            <th>Tempo</th>
+            <th>Arrangement</th>
+            <th>Highlights</th>
           </tr>
         </thead>
         <tbody>
@@ -246,10 +245,10 @@ export function PerformanceComparator({ performances }) {
 }
 ```
 
-### 2. Умные подборки
+### 2. Recommendation engine
 
 ```typescript
-// Система рекомендаций
+// Recommendation system
 interface Recommendation {
   type: "similar_performances" | "historical_evolution" | "artist_versions";
   title: string;
@@ -257,74 +256,74 @@ interface Recommendation {
   performances: Performance[];
 }
 
-// Пример: "Эволюция 'Смуглянки' от 1944 до наших дней"
+// Example: "The evolution of 'Smuglyanka' from 1944 to today"
 ```
 
-### 3. Музыкальные инструменты (опционально)
+### 3. Optional music tools
 
-- **Караоке-режим** - для желающих петь
-- **Транспонирование аккордов** - для гитаристов
-- **Метроном** с ритмическими паттернами песен
-- **Аудио-анализ** - сравнение темпов и тональностей
+- **Karaoke mode** for sing-along sessions.
+- **Chord transposition** tailored to instrument or vocal range.
+- **Metronome** with rhythm presets for iconic songs.
+- **Audio analysis** to compare tempo, key, and arrangement.
 
-## 🚀 Дорожная карта
+## Roadmap
 
-### Фаза 1: Фундамент (2 месяца)
+### Phase 1: Foundation (2 months)
 
-- [ ] 100+ песен с 5+ исполнениями каждой
-- [ ] Базовая система рейтингов и комментариев
-- [ ] Поиск и фильтрация
-- [ ] Удобный просмотр текстов и аккордов
+- [ ] 100+ songs with five or more performances each.
+- [ ] Base rating and commenting system.
+- [ ] Search and filtering.
+- [ ] Comfortable view for lyrics and chords.
 
-### Фаза 2: Сообщество (3 месяца)
+### Phase 2: Community (3 months)
 
-- [ ] Пользовательские сборники и плейлисты
-- [ ] Система добавления исполнений
-- [ ] Модерация и проверка контента
-- [ ] Уведомления и активность
+- [ ] User-created collections and playlists.
+- [ ] Submission workflow for new performances.
+- [ ] Moderation and content review.
+- [ ] Activity feed and notifications.
 
-### Фаза 3: Глубина (2 месяца)
+### Phase 3: Depth (2 months)
 
-- [ ] Расширенная база - 500+ песен
-- [ ] Инструменты сравнения исполнений
-- [ ] Исторические справки и контекст
-- [ ] Мобильное приложение
+- [ ] Expanded catalog to 500+ songs.
+- [ ] Advanced comparison tools.
+- [ ] Historical notes and cultural context.
+- [ ] Mobile application.
 
-### Фаза 4: Экосистема (2 месяца)
+### Phase 4: Ecosystem (2 months)
 
-- [ ] API для разработчиков
-- [ ] Интеграция с музыкальными школами
-- [ ] Партнерства с архивами и музеями
-- [ ] Оффлайн-режим
+- [ ] Developer API.
+- [ ] Integrations with music schools and educational partners.
+- [ ] Partnerships with archives and museums.
+- [ ] Offline mode.
 
-## 💡 Уникальное предложение
+## Unique Value Proposition
 
-### Для пользователей:
+### For Users
 
-"Rusongs.org — это ваш персональный гид в мире русской песни. Не просто найти текст, а открыть всю богатую историю исполнений, сравнить версии разных лет и найти именно то звучание, которое трогает душу."
+“Rusongs.org is your personal guide through the world of Russian songs. Not just lyrics, but the full story of every performance, a way to compare versions across decades, and a chance to find the interpretation that resonates with you.”
 
-### Ключевые преимущества:
+### Key Advantages
 
-1. **Глубина вместо ширины** — каждая песня раскрыта через десятки исполнений
-2. **Сообщество знатоков** — вместе находим и сохраняем лучшие версии
-3. **Культурный контекст** — понимание, а не просто прослушивание
-4. **Живой архив** — пополняемая коллекция вместо застывшего музея
+1. **Depth over breadth** – every song is presented through dozens of interpretations.
+2. **Community of experts** – discover and preserve the best versions together.
+3. **Cultural context** – understand the story, not just listen to the track.
+4. **Living archive** – an ever-growing collection instead of a static museum.
 
-## 📊 Монетизация
+## Monetization
 
-### Бесплатно:
+### Free tier
 
-- Полный доступ ко всем исполнениям
-- Участие в рейтингах и обсуждениях
-- Создание личных сборников
+- Full access to performances.
+- Participate in ratings and discussions.
+- Create personal collections.
 
-### Премиум (₽199/месяц):
+### Premium (199 RUB / month)
 
-- Оффлайн-доступ к избранным коллекциям
-- Расширенная история прослушиваний
-- Ранний доступ к новым поступлениям
-- Приоритет в предложениях для модерации
+- Offline access to favorite collections.
+- Extended listening history and insights.
+- Early access to new submissions.
+- Priority in moderation suggestions.
 
 ---
 
-**Rusongs.org** станет тем местом, где русская песня живёт во всём своём многообразии — не как застывший памятник, а как живая традиция, которую можно изучать, сравнивать и наслаждаться ею с новой глубиной.
+**Rusongs.org** will become the home where the Russian song stays alive in all its diversity – not a frozen monument, but a living tradition to study, compare, and enjoy with fresh depth.

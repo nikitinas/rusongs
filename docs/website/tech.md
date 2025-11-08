@@ -1,55 +1,55 @@
-# Технический стек: Rusongs.live + Crawler
+# Technical Stack: Rusongs.live + Crawler
 
-## 🎯 Основной стек
+## Core Web Stack
 
 ### Frontend + Fullstack
 
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript 5+
 - **Styling**: Tailwind CSS + shadcn/ui
-- **State Management**: Zustand + React Query
+- **State management**: Zustand + React Query
 
-## 🗄️ Базы данных и хранение
+## Data Layer and Storage
 
 ### Primary Database
 
-- **PostgreSQL** - основная база
-- **Prisma** - ORM и миграции
+- **PostgreSQL** – main transactional store.
+- **Prisma** – migrations and ORM.
 
-### Кэширование и поиск
+### Caching and Search
 
-- **Redis** - кэш, очереди, сессии
-- **Elasticsearch** - поиск песен
+- **Redis** – cache, queues, sessions.
+- **Elasticsearch** – indexing and full-text search for songs and performances.
 
-## 🕷️ Crawler система
+## Crawler System
 
-### Основные технологии
+### Core Technologies
 
-- **Puppeteer/Playwright** - для сложных сайтов
-- **Cheerio** - для простого парсинга HTML
-- **Axios** - HTTP запросы
-- **Node-cron** - планировщик задач
+- **Puppeteer / Playwright** – complex sites and scripted browsing.
+- **Cheerio** – lightweight HTML parsing.
+- **Axios** – HTTP requests.
+- **Node-cron** – scheduled jobs and recurring harvest tasks.
 
-### Интеграции API
+### API Integrations
 
 ```typescript
-// Платформы для агрегации
+// Aggregated sources
 const SOURCES = {
   youtube: "YouTube Data API v3",
   vk: "VK API",
   rutube: "RuTube API",
   yandex: "Yandex.Music API",
-  smotrim: "Смотрим.ru API",
+  smotrim: "Smotrim.ru API",
 };
 ```
 
-### Хранилище crawler данных
+### Crawler Data Storage
 
-- **Redis Queue** - очереди задач парсинга
-- **PostgreSQL** - результаты парсинга
-- **Elasticsearch** - индексация найденного
+- **Redis Queue** – crawl job scheduling and throttling.
+- **PostgreSQL** – normalized crawl results.
+- **Elasticsearch** – searchable index of harvested content.
 
-## 🔌 Внешние интеграции
+## External Integrations
 
 ### Video Platforms
 
@@ -57,43 +57,43 @@ const SOURCES = {
 - **VK Video API**
 - **RuTube API**
 
-### Хостинг
+### Hosting and Infrastructure
 
-- **Vercel** - Next.js приложение
-- **Railway** - базы данных и crawler
-- **AWS S3** - статические файлы
+- **Vercel** – Next.js application hosting.
+- **Railway** – databases and crawler runtime.
+- **AWS S3** – static file storage and backups.
 
-## 🛠 Вспомогательные технологии
+## Supporting Technologies
 
 ### Development
 
-- **NextAuth.js** - аутентификация
-- **Zod** - валидация данных
-- **React Hook Form** - формы
+- **NextAuth.js** – authentication.
+- **Zod** – schema validation.
+- **React Hook Form** – form handling.
 
-### Crawler специфика
+### Crawler Tooling
 
-- **rate-limiter** - ограничение запросов
-- **proxy-rotator** - смена IP для обхода блокировок
-- **user-agent-rotator** - смена User-Agent
+- **rate-limiter** – outbound request throttling.
+- **proxy-rotator** – changing IP pools to avoid blocking.
+- **user-agent-rotator** – emulating diverse clients.
 
-## 📱 Архитектура
+## Architecture Overview
 
 ### Next.js App Router
 
-- Server Components - данные
-- Client Components - интерактивность
-- API Routes - бэкенд + crawler управление
-- ISR - каталог песен
+- **Server Components** – data fetching and rendering.
+- **Client Components** – interactive shells.
+- **API Routes** – backend endpoints and crawler control webhooks.
+- **ISR** – incremental updates for the song catalog.
 
-### Crawler микросервис
+### Crawler Microservice
 
-- Отдельный Node.js процесс
-- Фоновая агрегация контента
-- REST API для управления парсингом
+- Runs as a dedicated Node.js worker.
+- Continuously enriches the catalog with new performances.
+- Exposes REST endpoints to manage sources, schedules, and crawl status.
 
-### Мультиязычность
+### Internationalization
 
-- **next-intl** - интернационализация
+- **next-intl** – locale routing and translations.
 
-Crawler будет работать как фоновая служба, постоянно пополняя базу новыми исполнениями из утвержденных источников.
+The crawler operates as a background service, constantly updating the database with approved sources so that the web layer can surface fresh performances with minimal delay.

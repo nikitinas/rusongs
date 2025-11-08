@@ -1,129 +1,129 @@
-# Техническая реализация Rusongs.org Website
+# Rusongs.org Website Technical Implementation
 
-Данный документ описывает архитектуру, компоненты и процессы, используемые в промо-сайте Rusongs.org. Сайт построен на Next.js 16 (App Router) и предназначен для публикации продуктовой документации, хранящейся в формате Markdown.
+This document describes the architecture, components, and processes behind the Rusongs.org marketing site. The project is built with Next.js 16 (App Router) and renders Markdown-based documentation into polished web pages.
 
-## 1. Архитектура и рендеринг
+## 1. Architecture and Rendering
 
-- **Фреймворк**: Next.js 16 с использованием App Router и строгого режима React.
-- **Режим генерации**: все маршруты предрендерятся статически при сборке (`next build`). В типичном сценарии деплоя на Vercel страницы обслуживаются из CDN.
-- **Вывод**: `next.config.ts` включает `output: "standalone"`, что даёт готовый к развёртыванию артефакт с Node.js сервером и минимальным набором зависимостей.
-- **Шрифты**: встроенные Google Fonts (Geist Sans/MONO) подключаются через `next/font/google` и работают во время SSG без дополнительных запросов.
+- **Framework**: Next.js 16 with App Router and React strict mode.
+- **Rendering mode**: all routes are statically pre-rendered during `next build`. In a typical Vercel deployment, pages are served from the CDN.
+- **Output**: `next.config.ts` sets `output: "standalone"` to produce a self-contained Node.js artifact with minimal dependencies.
+- **Fonts**: Geist Sans and Geist Mono are embedded via `next/font/google`, so they work during SSG without external requests.
 
-## 2. Структура проекта
+## 2. Project Structure
 
 ```
 .
-├── app/                         # App Router: страницы, layout и глобальные стили
-│   ├── layout.tsx               # Общий каркас, навигация и футер
-│   ├── page.tsx                 # Главная страница (контент-тизер)
-│   ├── overview/page.tsx        # Рендер overview.md
-│   └── tech/page.tsx            # Рендер tech.md
+├── app/                         # App Router: pages, layout, global styles
+│   ├── layout.tsx               # Shared shell, navigation, footer
+│   ├── page.tsx                 # Homepage (teaser of product narrative)
+│   ├── overview/page.tsx        # Renders docs/website/overview.md
+│   └── tech/page.tsx            # Renders docs/website/tech.md
 ├── docs/
-│   ├── website/overview.md      # Описание продукта
-│   ├── website/tech.md          # Технический стек
-│   └── technical-implementation.md  # (текущий документ)
-├── lib/markdown.ts              # Рендер Markdown → HTML
-├── public/                      # Публичные ассеты
-├── vercel.json                  # Настройки деплоя
-├── package.json                 # Скрипты и зависимости
-└── tsconfig.json                # Конфигурация TypeScript
+│   ├── website/overview.md      # Product brief
+│   ├── website/tech.md          # Technical stack
+│   └── technical-implementation.md  # (this document)
+├── lib/markdown.ts              # Markdown → HTML renderer
+├── public/                      # Static assets
+├── vercel.json                  # Deployment configuration
+├── package.json                 # Scripts and dependencies
+└── tsconfig.json                # TypeScript configuration
 ```
 
-## 3. Фронтенд-слой
+## 3. Frontend Layer
 
 ### 3.1 App Router
-- Каждая страница является серверным компонентом и получает данные во время сборки.
-- Маршруты (`app/**/page.tsx`) экспортируют `metadata` для настройки `<title>` и `<meta>` тегов.
-- 404 обрабатывается автоматически с помощью `/_not-found` (генерируется Next.js).
+- Each page is a server component that loads content during the build.
+- Routes (`app/**/page.tsx`) export `metadata` objects to control `<title>` and description tags.
+- 404 rendering is handled automatically by the App Router’s generated `_not-found`.
 
-### 3.2 Layout и навигация
-- `app/layout.tsx` задаёт верхний колонтитул, футер и глобальные классы.
-- Навигация строится на массиве `navigation`, что упрощает добавление новых ссылок.
-- Футер содержит ссылки на разделы документации и упоминание Vercel.
+### 3.2 Layout and Navigation
+- `app/layout.tsx` defines the shared header, footer, and applies global classes.
+- The menu is derived from a `navigation` array, simplifying future additions.
+- The footer links to documentation sections and credits Vercel as the hosting platform.
 
-### 3.3 Главная страница
-- `app/page.tsx` агрегирует ключевые тезисы из продуктового обзора:
-  - Ценностное предложение.
-  - Целевая аудитория и сегменты.
-  - Ключевые функции.
-  - CTA в разделы `overview` и `tech`.
-- Контент оформлен utility-классами Tailwind 4 и использует CSS переменные для цветовой схемы.
+### 3.3 Homepage
+- `app/page.tsx` distills the key points from the product overview:
+  - Value proposition.
+  - Audience segments.
+  - Core feature set.
+  - CTAs leading to `overview` and `tech` pages.
+- Styling relies on Tailwind CSS v4 utilities combined with custom CSS variables that match the design palette.
 
-## 4. Рендеринг Markdown
+## 4. Markdown Rendering
 
-- Файл `lib/markdown.ts` отвечает за чтение и преобразование Markdown.
-- Используемые плагины:
-  - `remark-gfm` — поддержка GitHub Flavored Markdown (таблицы, чекбоксы).
-  - `remark-slug` — генерация `id` для заголовков (для ссылок-якорей). Из-за несовместимости типов подключается через `slug as any`.
-  - `remark-html` — преобразование AST в HTML-строку.
-- `renderMarkdown` принимает относительный путь к файлу в `docs/` и возвращает HTML + заголовок верхнего уровня (используется при необходимости в будущем).
-- Безопасность: контент предполагается доверенным (docs под контролем репозитория). Если потребуется защита от XSS, можно добавить `rehype-sanitize`.
+- `lib/markdown.ts` encapsulates reading and transforming Markdown files.
+- Plugins in use:
+  - `remark-gfm` for GitHub Flavored Markdown (tables, task lists).
+  - `remark-slug` to inject `id` attributes on headings (currently cast via `slug as any` to avoid type mismatches).
+  - `remark-html` to convert the AST to an HTML string.
+- `renderMarkdown` accepts a path relative to `docs/` and returns the HTML string along with the first-level heading (reserved for future use).
+- Security: documentation is repository-controlled. If untrusted content is ever ingested, extend the pipeline with `rehype-sanitize`.
 
-## 5. Стилизация
+## 5. Styling
 
-- Глобальные стили (`app/globals.css`) используют Tailwind CSS v4 с директивой `@import "tailwindcss"`.
-- Основные цвета, фон и типографика вынесены в CSS-переменные:
-  - `--color-primary`, `--color-secondary`, `--color-background`, `--color-text-*`.
-- Класс `.markdown` настраивает типографику для HTML, сгенерированного из Markdown: заголовки, списки, таблицы, блоки кода и цитаты.
-- Для блоков кода используется тёмный фон и моноширинный шрифт Geist Mono.
+- Global styles in `app/globals.css` import Tailwind CSS v4 through `@import "tailwindcss"`.
+- Palette, background, and typography are exposed as CSS variables:
+  - `--color-primary`, `--color-secondary`, `--color-background`, `--color-text-*`, etc.
+- The `.markdown` class customizes typography for rendered HTML (headings, lists, tables, code blocks, blockquotes).
+- Code blocks use a dark background and the Geist Mono font for readability.
 
-## 6. Работа с контентом
+## 6. Content Workflow
 
-- Исходные файлы хранятся в `docs/website`. Добавление нового раздела требует:
-  1. Создать Markdown-файл в `docs/website`.
-  2. Создать страницу в `app/<slug>/page.tsx` и вызвать `renderMarkdown("<path>")`.
-  3. Добавить ссылку в верхнее меню (`navigation` в layout).
-- Если нужны автоматические якорные ссылки, можно расширить UI (например, генерировать TOC) — для этого достаточно парсить HTML после рендеринга.
+- Source Markdown lives in `docs/website`. To add a new section:
+  1. Create a Markdown file inside `docs/website`.
+  2. Add a route in `app/<slug>/page.tsx` that calls `renderMarkdown("<path>")`.
+  3. Append the link to the `navigation` array.
+- For automatic table-of-contents support, post-process the generated HTML or introduce an additional plugin in the pipeline.
 
-## 7. Сборка и деплой
+## 7. Build and Deployment
 
-- **ESLint**: `npm run lint` — строго без предупреждений (`--max-warnings=0`).
-- **Production build**: `npm run build`, генерирует `.next` и выводит список маршрутов.
-- **Старт production build**: `npm run start` (использует standalone-вывод).
+- **ESLint**: `npm run lint` with `--max-warnings=0` to enforce clean builds.
+- **Production build**: `npm run build` produces `.next` and outputs the list of static routes.
+- **Start**: `npm run start` runs the standalone server bundle.
 - **Vercel**:
-  - `vercel.json` фиксирует команды `install`, `build`, `dev`.
-  - Регионы: `arn1`, `sfo1`, `gru1` — географическое покрытие.
-  - Необходимые действия: подключить репозиторий, указать build command и output directory (`.next`).
-  - Всё статично, поэтому переменные окружения не требуются.
+  - `vercel.json` pins install, build, and dev commands.
+  - Regions: `arn1`, `sfo1`, `gru1` to cover Europe, US West, and South America.
+  - Steps: connect the repository, confirm build command/output directory (`.next`).
+  - No environment variables are required for the static documentation flow.
 
-## 8. Локальная разработка
+## 8. Local Development
 
 1. `npm install`
 2. `npm run dev`
-3. Открыть http://localhost:3000
+3. Open http://localhost:3000
 
-Рекомендуется включить опцию редактора для ESLint и TypeScript для быстрого обнаружения ошибок.
+Enable ESLint and TypeScript integration in the editor for fast feedback.
 
-## 9. Качество и тестирование
+## 9. Quality and Testing
 
-- **Линтер**: ESLint (конфиг Next.js 16 + React 19). Проверяется во время CI и локально.
-- **Сборка**: Next.js build — гарантирует валидность типов TypeScript и корректную генерацию страниц.
-- **Будущий расширяемый набор**:
-  - Визуальные снимки (Chromatic/Playwright) для проверки издания контента.
-  - Проверка доступности (axe-core или встроенные плагины Next.js).
-  - Интеграционные тесты с Playwright для проверки навигации.
+- **Linting**: ESLint (Next.js 16 + React 19 config) is run locally and can be enforced in CI.
+- **Build validation**: `next build` ensures type correctness and static generation success.
+- **Potential future checks**:
+  - Visual regression testing (Chromatic or Playwright).
+  - Accessibility audits (axe-core or Next.js built-in tools).
+  - Playwright integration tests for navigation paths.
 
-## 10. Обновление зависимости и Tailwind v4
+## 10. Dependency Management and Tailwind v4
 
-- Tailwind CSS 4 подключается через `@import "tailwindcss";`.
-- Конфигурация `postcss.config.mjs` создаётся автоматически пакетом `@tailwindcss/postcss`.
-- Для расширенных тем и плагинов (например, кастомной типографики) можно добавить `tailwind.config.ts` (по умолчанию не требуется).
+- Tailwind CSS 4 is enabled via `@import "tailwindcss"`.
+- `postcss.config.mjs` is generated by `@tailwindcss/postcss`.
+- Add a `tailwind.config.ts` if advanced theming or plugin customization becomes necessary (not required at present).
 
-## 11. Безопасность и производительность
+## 11. Security and Performance
 
-- Статический вывод минимизирует риск SSR-багов.
-- `poweredByHeader: false` скрывает заголовок `X-Powered-By`.
-- Использование встроенных шрифтов через `next/font` снижает сторонние запросы.
-- При добавлении динамического контента следует следить за корректной сериализацией (например, не передавать в клиентские компоненты недопустимые типы).
+- Static output eliminates common SSR pitfalls.
+- `poweredByHeader: false` hides the `X-Powered-By` header.
+- `next/font` reduces external requests by bundling fonts.
+- When introducing dynamic data, ensure client components receive serializable props only.
 
-## 12. Дальнейшее развитие
+## 12. Future Enhancements
 
-- Добавить автоматическую генерацию оглавления (TOC) для длинных документов.
-- Поддержка многопроектной документации (добавление конфигурации маршрутов через `generateStaticParams`).
-- Интеграция с CMS (например, GitHub CMS или mdx) при росте количества страниц.
-- Добавление тестов доступности и визуальных регрессов.
-- Локализация: текущий контент на русском; при необходимости расширить до нескольких языков (Next.js i18n routing).
+- Auto-generate a table of contents for long-form documents.
+- Support multiple documentation bundles via `generateStaticParams`.
+- Integrate a CMS (e.g., GitHub CMS or MDX-based workflows) when the number of pages grows.
+- Introduce accessibility and visual regression test suites.
+- Expand localization beyond Russian/English with Next.js i18n routing.
 
 ---
 
-Документ может служить стартовой точкой для разработчиков, подключающихся к проекту, и для команды, обслуживающей инфраструктуру Rusongs.org. При изменениях в архитектуре файл следует обновлять, чтобы сохранить актуальность и единое понимание технической модели.*** End Patch
+This document acts as an onboarding reference for developers and the infrastructure team. Update it whenever the architecture evolves to keep a shared understanding of how the Rusongs.org site is delivered.
