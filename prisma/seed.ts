@@ -3,7 +3,68 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-const songsSeed = [
+type SeedPerformance = {
+  id: string;
+  title: string;
+  type: PerformanceType;
+  artists: string[];
+  year: number;
+  duration: number;
+  source: PerformanceSource;
+  sourceUrl: string;
+  quality: {
+    audio: number;
+    video: number;
+    authenticity: number;
+  };
+  rating: {
+    overall: number;
+    votes: number;
+  };
+  context?: string;
+  highlights?: string[];
+  tempoBpm?: number;
+  arrangement?: string;
+};
+
+type SeedSong = {
+  id: string;
+  slug: string;
+  title: string;
+  originalTitle?: string;
+  era: string;
+  genre: string;
+  language: string;
+  summary: string;
+  lyrics: string;
+  chords: string;
+  defaultTempo: number;
+  tags: string[];
+  featuredImage?: string;
+  historicalContext?: string;
+  performances: SeedPerformance[];
+  collections: string[];
+};
+
+type SeedCollection = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  featuredSongIds: string[];
+  curator: string;
+  type: CollectionType;
+  songs: string[];
+};
+
+type SeedUser = {
+  email: string;
+  name: string;
+  role: Role;
+  password: string;
+};
+
+const songsSeed: SeedSong[] = [
   {
     id: "kalinka",
     slug: "kalinka",
@@ -193,7 +254,7 @@ const songsSeed = [
   },
 ];
 
-const collectionsSeed = [
+const collectionsSeed: SeedCollection[] = [
   {
     id: "folk-classics",
     slug: "folk-classics",
@@ -236,7 +297,7 @@ const collectionsSeed = [
   },
 ];
 
-const usersSeed = [
+const usersSeed: SeedUser[] = [
   {
     email: "admin@rusongs.test",
     name: "Admin User",

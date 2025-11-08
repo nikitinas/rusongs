@@ -23,23 +23,28 @@ const mapPerformanceType = (type: PrismaPerformanceType): Performance["type"] =>
 const mapPerformanceSource = (source: PrismaPerformanceSource): Performance["source"] =>
   source.toLowerCase() as Performance["source"];
 
-const mapPerformance = (performance: PerformanceRecord): Performance => ({
-  id: performance.id,
-  songId: performance.songId,
-  title: performance.title,
-  type: mapPerformanceType(performance.type),
-  artists: performance.artists,
-  year: performance.year,
-  duration: performance.duration,
-  source: mapPerformanceSource(performance.source),
-  sourceUrl: performance.sourceUrl,
-  quality: performance.quality as Performance["quality"],
-  rating: performance.rating as Performance["rating"],
-  context: performance.context ?? undefined,
-  highlights: performance.highlights.length ? performance.highlights : undefined,
-  tempoBpm: performance.tempoBpm ?? undefined,
-  arrangement: performance.arrangement ?? undefined,
-});
+const mapPerformance = (performance: PerformanceRecord): Performance => {
+  const quality = performance.quality as unknown as Performance["quality"];
+  const rating = performance.rating as unknown as Performance["rating"];
+
+  return {
+    id: performance.id,
+    songId: performance.songId,
+    title: performance.title,
+    type: mapPerformanceType(performance.type),
+    artists: performance.artists,
+    year: performance.year,
+    duration: performance.duration,
+    source: mapPerformanceSource(performance.source),
+    sourceUrl: performance.sourceUrl,
+    quality,
+    rating,
+    context: performance.context ?? undefined,
+    highlights: performance.highlights.length ? performance.highlights : undefined,
+    tempoBpm: performance.tempoBpm ?? undefined,
+    arrangement: performance.arrangement ?? undefined,
+  };
+};
 
 const mapSong = (song: SongWithRelations): Song => ({
   id: song.id,
