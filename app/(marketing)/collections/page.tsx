@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getCollections } from "@/lib/data";
 
-export default function CollectionsLandingPage() {
-  const collections = getCollections();
+export default async function CollectionsLandingPage() {
+  const collections = await getCollections();
 
   return (
     <div className="space-y-10">

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPerformanceById } from "@/lib/data";
 
-export function GET(request: Request) {
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
 
@@ -9,7 +9,7 @@ export function GET(request: Request) {
     return NextResponse.json({ error: "Missing performance id" }, { status: 400 });
   }
 
-  const performance = getPerformanceById(id);
+  const performance = await getPerformanceById(id);
 
   if (!performance) {
     return NextResponse.json({ error: "Performance not found" }, { status: 404 });

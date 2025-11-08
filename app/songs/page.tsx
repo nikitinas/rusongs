@@ -13,21 +13,17 @@ interface SongsPageProps {
   searchParams: { query?: string; tag?: string };
 }
 
-export default function SongsPage({ searchParams }: SongsPageProps) {
-  const songs = getSongs({ search: searchParams.query, tag: searchParams.tag });
+export default async function SongsPage({ searchParams }: SongsPageProps) {
+  const [songs, allSongs] = await Promise.all([getSongs({ search: searchParams.query, tag: searchParams.tag }), getSongs()]);
 
-  const availableTags = Array.from(
-    new Set(
-      getSongs().flatMap((song) => song.tags)
-    )
-  ).slice(0, 12);
+  const availableTags = Array.from(new Set(allSongs.flatMap((song) => song.tags))).slice(0, 12);
 
   return (
     <div className="space-y-10">
       <header className="space-y-4">
         <h1 className="font-display text-4xl text-primary">Каталог песен</h1>
         <p className="text-sm text-text-secondary">
-          В базе {getSongs().length} произведений. Используйте поиск и фильтры, чтобы найти нужное исполнение.
+          В базе {allSongs.length} произведений. Используйте поиск и фильтры, чтобы найти нужное исполнение.
         </p>
         <CatalogSearchForm />
       </header>

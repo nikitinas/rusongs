@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, LogOut } from "lucide-react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { MobileNavSheet } from "@/components/ui/MobileNavSheet";
 import { SearchInput } from "@/components/ui/SearchInput";
+import { ROLE_LABELS } from "@/lib/auth/roles";
 
 const NAV_ITEMS = [
   { href: "/", label: "Главная" },
@@ -19,6 +21,9 @@ const NAV_ITEMS = [
 export function AppHeader() {
   const pathname = usePathname();
   const [showSearch, setShowSearch] = useState(false);
+  const { data: session, status } = useSession();
+
+  const roleLabel = session?.user?.role ? ROLE_LABELS[session.user.role] : null;
 
   return (
     <header className="sticky top-0 z-50 border-b border-black/5 bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/80">
@@ -66,12 +71,29 @@ export function AppHeader() {
           >
             <Search className="h-5 w-5" />
           </button>
-          <Link
-            href="/account"
-            className="hidden rounded-full bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90 md:inline-flex"
-          >
-            Войти
-          </Link>
+          {status === "authenticated" ? (
+            <>
+              {roleLabel ? (
+                <span className="hidden rounded-full border border-primary/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary md:inline-flex">
+                  {roleLabel}
+                </span>
+              ) : null}
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="inline-flex items-center gap-2 rounded-full border border-primary/20 px-4 py-2 text-sm font-medium text-primary transition hover:border-primary/40 hover:bg-primary/5"
+              >
+                <LogOut className="h-4 w-4" />
+                Выйти
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => signIn(undefined, { callbackUrl: "/" })}
+              className="hidden rounded-full bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90 md:inline-flex"
+            >
+              Войти
+            </button>
+          )}
         </div>
       </div>
       {showSearch ? (
