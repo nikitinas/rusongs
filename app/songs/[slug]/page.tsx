@@ -9,7 +9,7 @@ interface SongPageProps {
 }
 
 export async function generateMetadata({ params }: SongPageProps): Promise<Metadata> {
-  const song = getSongBySlug(params.slug);
+  const song = await getSongBySlug(params.slug);
   if (!song) {
     return {
       title: "Песня не найдена"
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: SongPageProps): Promise<Metad
   };
 }
 
-export default function SongPage({ params }: SongPageProps) {
-  const song = getSongBySlug(params.slug);
+export default async function SongPage({ params }: SongPageProps) {
+  const song = await getSongBySlug(params.slug);
 
   if (!song) {
     notFound();

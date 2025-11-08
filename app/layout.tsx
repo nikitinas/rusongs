@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 import { AppShell } from "@/components/layout/AppShell";
+import { getServerAuthSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: {
@@ -30,11 +31,13 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await getServerAuthSession();
+
   return (
     <html lang="ru">
       <body className="min-h-screen bg-background font-body text-text-primary">
-        <Providers>
+        <Providers session={session}>
           <AppShell>{children}</AppShell>
         </Providers>
       </body>

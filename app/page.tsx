@@ -4,9 +4,8 @@ import { PerformanceSpotlight } from "@/components/domain/PerformanceSpotlight";
 import { SongCard } from "@/components/domain/SongCard";
 import { CollectionCard } from "@/components/domain/CollectionCard";
 
-export default function HomePage() {
-  const songs = getSongs();
-  const collections = getCollections();
+export default async function HomePage() {
+  const [songs, collections] = await Promise.all([getSongs(), getCollections()]);
 
   const [firstSong] = songs;
   const spotlightPerformance = firstSong?.performances[0];

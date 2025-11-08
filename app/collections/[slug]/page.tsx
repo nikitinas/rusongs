@@ -8,7 +8,7 @@ interface CollectionPageProps {
 }
 
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
-  const collection = getCollectionBySlug(params.slug);
+  const collection = await getCollectionBySlug(params.slug);
   if (!collection) {
     return { title: "Коллекция не найдена" };
   }
@@ -18,13 +18,13 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   };
 }
 
-export default function CollectionPage({ params }: CollectionPageProps) {
-  const collection = getCollectionBySlug(params.slug);
+export default async function CollectionPage({ params }: CollectionPageProps) {
+  const collection = await getCollectionBySlug(params.slug);
   if (!collection) {
     notFound();
   }
 
-  const songs = getSongs().filter((song) => collection.featuredSongIds.includes(song.id));
+  const songs = (await getSongs()).filter((song) => collection.featuredSongIds.includes(song.id));
 
   return (
     <div className="space-y-8">
