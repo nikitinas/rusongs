@@ -1,0 +1,8 @@
+module.exports = {
+  root: true,
+  extends: ["next", "next/core-web-vitals"],
+  rules: {
+    "@next/next/no-img-element": "off",
+    "react/jsx-key": "off"
+  }
+};
